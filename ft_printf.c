@@ -6,11 +6,30 @@
 /*   By: glegendr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/28 16:20:10 by glegendr          #+#    #+#             */
-/*   Updated: 2017/12/28 19:05:58 by glegendr         ###   ########.fr       */
+/*   Updated: 2018/01/02 20:44:45 by glegendr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+
+int		ft_flags(char const *restrict format, int i, va_list *v, t_vec *vec)
+{
+	if (format[i] == '#')
+	{
+		if (format[i + 1] != 'X' && format[i + 1] != 'x')
+			return (3);
+		if (format[i + 1] == 'x')
+		{
+			ft_putstr("0x");
+			ft_putstr(ft_itoa_base(va_arg(*v, int), 16, 'x'));
+			return (3);
+		}
+			ft_putstr("0X");
+			ft_putstr(ft_itoa_base(va_arg(*v, int), 16, 'X'));
+			return (3);
+	}
+	return (1);
+}
 
 int		ft_check_flags(char const *restrict format, int i,
 		va_list *v, t_vec *vec)
@@ -25,7 +44,7 @@ int		ft_check_flags(char const *restrict format, int i,
 		ft_annalize(format, i, v, vec);
 		return (2);
 	}
-	//return (ft_flags(format, i, v, vec));
+	return (ft_flags(format, i, v, vec));
 	return (2);
 }
 
@@ -63,7 +82,8 @@ int main(int argc, const char *argv[])
 {
 	//ft_printf("");
 	//printf("%i\n", printf("%s je suis Francais\n", "salutt")); // 24 char ecris
-	ft_printf("%s %c%c%c%c%c\t%i", "salut", 'H', 'e', 'l', 'l', 'o', 22);
+	ft_printf("%s %c%c%c%c%c%c\t%o\n", "salut", 'H', 'e', 'l', '\0', 'l', 'o', 8);
+	printf("%s %c%c%c%c%c%c\t%o\n", "salut", 'H', 'e', 'l', '\0', 'l', 'o', 8);
 
 	return 0;
 }
