@@ -6,33 +6,13 @@
 /*   By: glegendr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/28 16:20:10 by glegendr          #+#    #+#             */
-/*   Updated: 2018/01/02 20:44:45 by glegendr         ###   ########.fr       */
+/*   Updated: 2018/01/08 21:02:23 by glegendr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int		ft_flags(char const *restrict format, int i, va_list *v, t_vec *vec)
-{
-	if (format[i] == '#')
-	{
-		if (format[i + 1] != 'X' && format[i + 1] != 'x')
-			return (3);
-		if (format[i + 1] == 'x')
-		{
-			ft_putstr("0x");
-			ft_putstr(ft_itoa_base(va_arg(*v, int), 16, 'x'));
-			return (3);
-		}
-			ft_putstr("0X");
-			ft_putstr(ft_itoa_base(va_arg(*v, int), 16, 'X'));
-			return (3);
-	}
-	return (1);
-}
-
-int		ft_check_flags(char const *restrict format, int i,
-		va_list *v, t_vec *vec)
+int		ft_check_flags(char const *restrict format, int i, va_list *v)
 {
 	if (format[i] == '%')
 	{
@@ -41,11 +21,10 @@ int		ft_check_flags(char const *restrict format, int i,
 	}
 	if (ft_conv(format, i))
 	{
-		ft_annalize(format, i, v, vec);
+		ft_annalize(format, i, v);
 		return (2);
 	}
-	return (ft_flags(format, i, v, vec));
-	return (2);
+	return (ft_flags(format, i, v, 3));
 }
 
 int			ft_printf(char const *restrict format, ...)
@@ -65,7 +44,7 @@ int			ft_printf(char const *restrict format, ...)
 			v_print(&vec, 1);
 			v_del(&vec);
 			vec = v_new(sizeof(char));
-			 i += ft_check_flags(format, i + 1, &v, &vec);
+			 i += ft_check_flags(format, i + 1, &v);
 		}
 		else
 		{
@@ -75,15 +54,13 @@ int			ft_printf(char const *restrict format, ...)
 	v_push(&vec, (void *)"\0");
 	v_print(&vec, 1);
 	free(c);
+	va_end(v);
 	return (0);
 }
 
 int main(int argc, const char *argv[])
 {
-	//ft_printf("");
-	//printf("%i\n", printf("%s je suis Francais\n", "salutt")); // 24 char ecris
-	ft_printf("%s %c%c%c%c%c%c\t%o\n", "salut", 'H', 'e', 'l', '\0', 'l', 'o', 8);
-	printf("%s %c%c%c%c%c%c\t%o\n", "salut", 'H', 'e', 'l', '\0', 'l', 'o', 8);
-
-	return 0;
+	char *s = "il y a 20 caracteres";
+	ft_printf("%-87iend\n", 107);
+	printf("%-87iend", 107);
 }

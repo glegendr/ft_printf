@@ -6,7 +6,7 @@
 /*   By: glegendr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/28 16:29:54 by glegendr          #+#    #+#             */
-/*   Updated: 2017/12/28 18:29:39 by glegendr         ###   ########.fr       */
+/*   Updated: 2018/01/08 19:17:35 by glegendr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,12 @@ int				ft_conv(char const *restrict format, int i)
 	return (0);
 }
 
-static int		ft_nb(char const *restrict format, int i)
+int		ft_nb(char const *restrict format, int i)
 {
 	int y;
 
 	y = 0;
-	while (format[i] <= 57 && format[i] >= 48)
+	while (format[i] <= '9' && format[i] >= '0')
 	{
 		++i;
 		++y;
@@ -45,7 +45,7 @@ static int		ft_check(char const *restrict format, int i, char c)
 	return (0);
 }
 
-static int		ft_flags(char const *restrict format, int i)
+static int		ft_flagis(char const *restrict format, int i)
 {
 	if (ft_check(format, i, ' ') || ft_check(format, i, '-') ||
 			ft_check(format, i, '0') || (format[i] == '#' &&
@@ -67,7 +67,7 @@ int				va_coumpt(char const *restrict format)
 	while (format[i])
 	{
 		if (format[i] == '%' &&
-				(ft_conv(format, i + 1) || ft_flags(format, i + 1)))
+				(ft_conv(format, i + 1) || ft_flagis(format, i + 1)))
 			++y;
 		if (format[i] == '%' && format[i + 1] == '%')
 			++i;
