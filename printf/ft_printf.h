@@ -6,7 +6,7 @@
 /*   By: glegendr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/20 14:58:58 by glegendr          #+#    #+#             */
-/*   Updated: 2018/01/16 20:21:37 by glegendr         ###   ########.fr       */
+/*   Updated: 2018/01/17 20:21:05 by glegendr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,11 @@ int				ft_all_print(char c, va_list *v);
 int				ft_flags(char const *restrict format,
 		int i, va_list *v, t_st *s);
 int				ft_flag_neg(char const *restrict format, int i);
-void			ft_flag_is_size(t_st *t, int string_s, t_vec *v, void *data);
-void			ft_flag_is_pre(int *size, int string_s, t_vec *v, void *data);
-void			ft_flag_is_sharp(int size, int string_s, t_vec *v, void *data);
-int				ft_flag_is_null(char const *restrict format,
-		int i, va_list *v, t_st *s);
-void			ft_flag_is_space(int *space, t_vec *vec, void *data);
+void			ft_flag_is_size(t_st *t, int string_s, t_vec *v, int *i);
+void			ft_flag_is_pre(int *size, int string_s, t_vec *v, int *i);
+void			ft_flag_is_sharp(t_st *t, int string_s, t_vec *v, int *i);
+void			ft_flag_is_null(t_st *t, int string_s, t_vec *v, int *i);
+void			ft_flag_is_space(t_st *t, t_vec *vec, void *data, int *i);
 int				ft_flag_is_less(char const *restrict format,
 		int i, va_list *v, t_st *s);
 int				ft_flag_is_more(char const *restrict format,

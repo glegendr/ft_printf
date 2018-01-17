@@ -76,6 +76,7 @@ SRCNAME= ft_isprint \
 		 ft_realloc\
 		 v_new\
 		 v_push\
+		 v_push_first\
 		 v_print\
 		 v_append_raw\
 		 v_get\

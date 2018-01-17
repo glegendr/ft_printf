@@ -6,17 +6,18 @@
 /*   By: glegendr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/02 18:34:59 by glegendr          #+#    #+#             */
-/*   Updated: 2018/01/16 16:46:52 by glegendr         ###   ########.fr       */
+/*   Updated: 2018/01/17 20:54:37 by glegendr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static char		*ft_conv_low(char const *base_char, int nb, int neg, int base)
+static char		*ft_conv_low(char const *base_char, long long nb,
+		int neg, int base)
 {
 	char	*s;
 	int		i;
-	int		n;
+	long long		n;
 
 	i = 0;
 	n = nb;
@@ -41,11 +42,12 @@ static char		*ft_conv_low(char const *base_char, int nb, int neg, int base)
 	return (s);
 }
 
-static char		*ft_conv_up(char const *base_char, int nb, int neg, int base)
+static char		*ft_conv_up(char const *base_char, long long nb,
+		int neg, int base)
 {
-	char	*s;
-	int		i;
-	int		n;
+	char			*s;
+	int				i;
+	long long		n;
 
 	i = 0;
 	n = nb;
@@ -70,7 +72,7 @@ static char		*ft_conv_up(char const *base_char, int nb, int neg, int base)
 	return (s);
 }
 
-static char		*ft_convertion_base(char flag, int nb, int neg, int base)
+static char		*ft_convertion_base(char flag, long long nb, int neg, int base)
 {
 	const char base_char_up[] = "0123456789ABCDEF";
 	const char base_char_low[] = "0123456789abcdef";
