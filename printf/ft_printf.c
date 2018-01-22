@@ -6,7 +6,7 @@
 /*   By: glegendr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/15 17:00:10 by glegendr          #+#    #+#             */
-/*   Updated: 2018/01/16 18:15:40 by glegendr         ###   ########.fr       */
+/*   Updated: 2018/01/22 20:34:29 by glegendr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ void		ft_print(t_vec *vec, char *str, int *cmpt)
 			ft_print_flags(&t, cmpt, v);
 			++y;
 		}
-//	v_del(&v);
 }
 
 int			ft_printf(char const *restrict format, ...)

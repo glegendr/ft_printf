@@ -6,7 +6,7 @@
 /*   By: glegendr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/23 13:17:45 by glegendr          #+#    #+#             */
-/*   Updated: 2018/01/16 20:33:38 by glegendr         ###   ########.fr       */
+/*   Updated: 2018/01/22 21:33:27 by glegendr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,6 @@ int		trouver(char const *restrict s, int i, va_list *v, t_st *t)
 	cmpt = 0;
 	while (!ft_conv(s, i))
 	{
-		//ft_putstr(&s[i]);
-		//ft_putchar('\n');
 		if (s[i] == '#')
 		{
 			if (t->sharp == 1)
@@ -176,6 +174,8 @@ int		trouver(char const *restrict s, int i, va_list *v, t_st *t)
 		t->mask |= POINT;
 		t->data = va_arg(*v, void *);
 	}
+	else if (s[i] == 'b')
+		t->data = va_arg(*v, char *);
 	else if (s[i] == 's')
 	{
 		t->mask |= STRING;
@@ -188,11 +188,17 @@ int		trouver(char const *restrict s, int i, va_list *v, t_st *t)
 		t->mask |= DEC;
 		if (t->l == 0 && t->h == 0 && t->j == 0 && t->z == 0)
 		t->data = va_arg(*v, char *);
-		if (t->l == 1 && t->h == 0 && t->j == 0 && t->z == 0)
+		else if (t->j == 1)
+		t->data = (void *)va_arg(*v, intmax_t);
+		else if (t->z == 1)
+		t->data = (void *)va_arg(*v, size_t);
+		else if (t->l == 1)
 		t->data = (void *)va_arg(*v, long int);
-		if (t->l == 2 && t->h == 0 && t->j == 0 && t->z == 0)
+		else if (t->l == 2)
 		t->data = (void *)va_arg(*v, long long int);
-		if (t->l == 0 && t->h == 1 && t->j == 0 && t->z == 0)
+		else if (t->h == 1)
+		t->data = (void *)va_arg(*v, char *);
+		else if (t->h == 2)
 		t->data = (void *)va_arg(*v, char *);
 	}
 	else if (s[i] == '%')
@@ -203,7 +209,20 @@ int		trouver(char const *restrict s, int i, va_list *v, t_st *t)
 	else if (s[i] == 'o')
 	{
 		t->mask |= OCT;
+		if (t->l == 0 && t->h == 0 && t->j == 0 && t->z == 0)
 		t->data = va_arg(*v, char *);
+		else if (t->j == 1)
+		t->data = (void *)va_arg(*v, uintmax_t);
+		else if (t->z == 1)
+		t->data = (void *)va_arg(*v, size_t);
+		else if (t->l == 1)
+		t->data = (void *)va_arg(*v, unsigned long int);
+		else if (t->l == 2)
+		t->data = (void *)va_arg(*v, unsigned long long int);
+		else if (t->h == 1)
+		t->data = (void *)va_arg(*v, char *);
+		else if (t->h == 2)
+		t->data = (void *)va_arg(*v, unsigned char *);
 	}
 	else if (s[i] == 'u')
 	{
@@ -225,14 +244,27 @@ int		trouver(char const *restrict s, int i, va_list *v, t_st *t)
 		t->mask |= CHAR;
 		t->data = va_arg(*v, char *);
 	}
+	else if (s[i] == 'D')
+	{
+		t->mask |= DEC;
+		t->l = 1;
+		t->data = (void *)va_arg(*v, long int);
+	}
+	else if (s[i] == 'O')
+	{
+		t->mask |= OCT;
+		t->l = 1;
+		t->data = (void *)(va_arg(*v, unsigned long));
+	}
+	else if (s[i] == 'U')
+	{
+		t->mask |= UNSIGNED;
+		t->l = 1;
+		t->data = (void *)(va_arg(*v, unsigned long));
+	}
 	else
 	{
 		ft_putstr("Error: no convertissor Founded");
-		exit(1);
-	}
-	if (t->l != 0 && t->h != 0)
-	{
-		ft_putstr("Error: icompatible flags");
 		exit(1);
 	}
 	t->prin = s[i];
@@ -275,11 +307,6 @@ t_vec	ft_pars_end(t_vec vec)
 				++bon;
 		++y;
 	}
-	if (bon != v_size(&vec))
-	{
-		ft_putstr("Error: Flags are not accepted");
-		exit(1);
-	}
 	return (vec);
 }
 
@@ -291,6 +318,8 @@ t_vec	ft_pars(char const *restrict s, va_list *v, char **str)
 
 	vec = v_new(sizeof(t));
 	i = 0;
+	if (*str != NULL)
+		*str = NULL;
 	while (s[i])
 	{
 		if (s[i] == '%')
@@ -313,13 +342,13 @@ t_vec	ft_pars(char const *restrict s, va_list *v, char **str)
 int		main(int argc, const char *argv[])
 {
 	t_st s;
-	int i = -92;
-
+	unsigned long long i = 18446744073709551615;
+	wchar_t s1[15] ={L'R', L'o', L'g', 130, L' ', L'e', L's', L't', L' ', L'l', L'a', L'.' , 130, L'o', L't'};
 	if (argc != 1)
 	{
-		ft_printf((char *)argv[1], i);
+		ft_printf((char *)argv[1], 0, s1, i);
 		write(1, "\n", 1);
-		printf((char *)argv[1] , i);
+		printf((char *)argv[1], 0, s1, i);
 	}
 	else
 		ft_putstr("Error: No input");

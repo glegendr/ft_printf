@@ -18,6 +18,7 @@ SRCNAME= ft_isprint \
 		 ft_strrchr \
 		 ft_itoa    \
 		 ft_itoa_base\
+		 ft_uitoa_base\
 		 ft_memchr   \
 		 ft_putendl_fd \
 		 ft_strcpy   \

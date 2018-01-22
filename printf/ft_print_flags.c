@@ -6,7 +6,7 @@
 /*   By: glegendr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/15 18:55:09 by glegendr          #+#    #+#             */
-/*   Updated: 2018/01/17 22:07:07 by glegendr         ###   ########.fr       */
+/*   Updated: 2018/01/22 20:42:55 by glegendr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,23 @@ void		ft_print_s(t_st *t, int i, int *cmpt)
 	*cmpt += v_size(&vec);
 	v_del(&vec);
 }
-void		ft_print_ls(t_st *t, int i, int *cmpt)
+int		ft_print_ls(wchar_t *s, int precision)
 {
-	ft_putstr("On vas attendre pour les wchar_t*");
+	int i;
+
+	i = 0;
+	while (s[i++]);
+	if (precision == -1)
+		precision = i;
+	i = 0;
+	while (s[i] <= 255 && s[i] >= 1 && i < precision)
+		write(1, &s[i++], 1);
+	return (i);
 }
 
 void		ft_putwchar(wchar_t c)
 {
-	ft_putstr("On vas attendre pour les wchar_t");
+	write(1, &c, 1);
 }
 
 void		ft_print_bin(t_st *t, int *cmpt)
@@ -69,7 +78,7 @@ void		ft_print_flags(t_st *t, int *cmpt, t_vec vec)
 	if (t->prin == 's' && t->l == 0)
 		ft_print_s(t, 0, cmpt);
 	else if (t->prin == 's')
-		ft_print_ls(t, 0, cmpt);
+		*cmpt += ft_print_ls((wchar_t *)t->data, t->precision);
 	else if (t->prin == 'p')
 		ft_push_pointeur(t->data, &vec, cmpt);
 	else if (t->prin == 'c' && t->l == 0)
@@ -84,8 +93,8 @@ void		ft_print_flags(t_st *t, int *cmpt, t_vec vec)
 	}
 	else if (t->prin == 'i' || t->prin == 'd' || t->prin == 'D')
 		ft_print_dec(t, cmpt);
-	else if (t->prin == 'x' || t->prin == 'X' ||
-			t->prin == 'o' || t->prin == 'u')
+	else if (t->prin == 'x' || t->prin == 'X' || t->prin == 'O' ||
+			t->prin == 'o' || t->prin == 'u' || t->prin == 'U')
 		ft_print_hex(t, cmpt);
 	else if (t->prin == 'b')
 		ft_print_bin(t, cmpt);
