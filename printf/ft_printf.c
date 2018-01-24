@@ -6,7 +6,7 @@
 /*   By: glegendr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/15 17:00:10 by glegendr          #+#    #+#             */
-/*   Updated: 2018/01/22 20:34:29 by glegendr         ###   ########.fr       */
+/*   Updated: 2018/01/24 21:45:49 by glegendr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,9 @@ int			ft_printf(char const *restrict format, ...)
 	va_list v;
 	char *str;
 	int cmpt;
-
+	
+	if (format[0] == 0)
+		return (0);
 	cmpt = 0;
 	va_start(v, format);
 	vec = ft_pars(format, &v, &str);

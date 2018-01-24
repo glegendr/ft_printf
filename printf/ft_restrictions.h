@@ -6,7 +6,7 @@
 /*   By: glegendr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/11 21:29:06 by glegendr          #+#    #+#             */
-/*   Updated: 2018/01/15 19:23:59 by glegendr         ###   ########.fr       */
+/*   Updated: 2018/01/24 21:46:02 by glegendr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,16 +32,20 @@
 # define J 1<<17
 # define Z 1<<18
 # define PC 1<<19
+# define BASICS (PRE | ZERO | PLUS | SPACE | SHARP)
+# define CONV (HH | H | L | LL | J | Z)
 
-int g_restrictions[] = {
-	STRING | PRE | L,
-	POINT,
-	PC,
-	DEC | PRE | PLUS | ZERO | SPACE | HH | H | L | LL | J | Z,
-	OCT | PRE | SHARP | ZERO | HH | H | L | LL | J | Z ,
-	UNSIGNED | PRE | ZERO | HH | H | L | LL | J | Z,
-	HEXA | PRE | SHARP | ZERO | HH | H | L | LL | J | Z,
-	HEXAMAJ | PRE | SHARP | ZERO | HH | H | L | LL | J | Z,
-	CHAR | L,
-};
+/*
+**  int g_restrictions[] = {
+**		STRING | PRE | L,
+**		POINT,
+**		PC,
+**		DEC | PRE | PLUS | ZERO | SPACE | HH | H | L | LL | J | Z,
+**		OCT | PRE | SHARP | ZERO | HH | H | L | LL | J | Z ,
+**		UNSIGNED | PRE | ZERO | HH | H | L | LL | J | Z,
+**		HEXA | PRE | SHARP | ZERO | HH | H | L | LL | J | Z,
+**		HEXAMAJ | PRE | SHARP | ZERO | HH | H | L | LL | J | Z,
+**		CHAR | L,
+**};
+*/
 #endif
