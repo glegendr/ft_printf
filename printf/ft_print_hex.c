@@ -6,7 +6,7 @@
 /*   By: glegendr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/17 20:11:19 by glegendr          #+#    #+#             */
-/*   Updated: 2018/01/24 21:29:08 by glegendr         ###   ########.fr       */
+/*   Updated: 2018/01/26 20:36:15 by glegendr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ char		*ft_ini_hex(t_st *t)
 		return (ft_itoa_base((unsigned short)t->data, 16, 0));
 	return ("Courez mon seigneur des sarasins !");
 }
+
 char		*ft_ini_oct(t_st *t)
 {
 	if ((t->mask & CONV) == 0)
@@ -48,6 +49,7 @@ char		*ft_ini_oct(t_st *t)
 		return (ft_uitoa_base((unsigned short)t->data, 8, 'x'));
 	return ("Whalla c'est pas moi !");
 }
+
 char		*ft_ini_unsigned(t_st *t)
 {
 	if ((t->mask & CONV) == 0)
@@ -86,31 +88,11 @@ char		*ft_ini_hex_bis(t_st *t)
 	return ("Courez mon seigneur des sarasins *bis* !");
 }
 
-void		ft_flag_is_sharp(t_st *t, int string_size, t_vec *vec, int *i)
-{
-	(void)string_size;
-	if ((t->mask & SHARP) == 0 || t->prin == 'u')
-		return ;
-	if (t->prin == 'x')
-		v_append_raw(vec, "0x", 2);
-	else if (t->prin == 'X')
-		v_append_raw(vec, "0X", 2);
-	else if (t->prin == 'b')
-		v_append_raw(vec, "0b", 2);
-	else if (t->prin == 'o')
-	{
-		v_push(vec, "0");
-		*i += 1;
-		return ;
-	}
-	*i += 2;
-}
-
 void		ft_print_hex(t_st *t, int *cmpt)
 {
-	char *s;
-	t_vec vec;
-	int i;
+	char	*s;
+	t_vec	vec;
+	int		i;
 
 	i = 0;
 	vec = v_new(sizeof(char));

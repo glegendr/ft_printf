@@ -1,31 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_stradd.c                                        :+:      :+:    :+:   */
+/*   v_del_last.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: glegendr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/01/15 17:44:46 by glegendr          #+#    #+#             */
-/*   Updated: 2018/01/25 21:59:58 by glegendr         ###   ########.fr       */
+/*   Created: 2018/01/26 19:49:02 by glegendr          #+#    #+#             */
+/*   Updated: 2018/01/26 19:52:31 by glegendr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "vector.h"
 
-void			ft_stradd(char **s, char c)
+void		v_del_last(t_vec *vec)
 {
-	size_t size;
-
-	if (*s != NULL)
-	{
-		size = ft_strlen(*s);
-		*s = ft_realloc(*s, size, size + 1);
-		(*s)[size] = c;
-		(*s)[size + 1] = '\0';
-	}
-	else
-	{
-		*s = ft_strnew(1);
-		(*s)[0] = c;
-	}
+	vec->private_elem_nb -= 1;
 }

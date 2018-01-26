@@ -6,14 +6,15 @@ CFLAG=
 #CFLAG+= -Wall
 #CFLAG+= -fsanitize=address
 SRCNAME= ft_convertissor\
+		 ft_flags\
+		 ft_pars\
 		 ft_print_dec\
 		 ft_print_flags\
 		 ft_print_hex\
 		 ft_printf\
 		 ft_push_point\
 		 ft_rawtoi\
-		 ft_bin_to_wchar_t\
-		 test
+		 wchar_t_to_str
 
 OBJDIR=obj/
 CLEANOBJDIR=OBJDIR

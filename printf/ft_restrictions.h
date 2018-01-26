@@ -6,12 +6,12 @@
 /*   By: glegendr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/11 21:29:06 by glegendr          #+#    #+#             */
-/*   Updated: 2018/01/24 21:46:02 by glegendr         ###   ########.fr       */
+/*   Updated: 2018/01/26 20:40:06 by glegendr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_RESTRICTION_H
-# define FT_RESTRICTION_H
+#ifndef FT_RESTRICTIONS_H
+# define FT_RESTRICTIONS_H
 # define PRE 1<<0
 # define ZERO 1<<1
 # define PLUS 1<<2
@@ -34,18 +34,4 @@
 # define PC 1<<19
 # define BASICS (PRE | ZERO | PLUS | SPACE | SHARP)
 # define CONV (HH | H | L | LL | J | Z)
-
-/*
-**  int g_restrictions[] = {
-**		STRING | PRE | L,
-**		POINT,
-**		PC,
-**		DEC | PRE | PLUS | ZERO | SPACE | HH | H | L | LL | J | Z,
-**		OCT | PRE | SHARP | ZERO | HH | H | L | LL | J | Z ,
-**		UNSIGNED | PRE | ZERO | HH | H | L | LL | J | Z,
-**		HEXA | PRE | SHARP | ZERO | HH | H | L | LL | J | Z,
-**		HEXAMAJ | PRE | SHARP | ZERO | HH | H | L | LL | J | Z,
-**		CHAR | L,
-**};
-*/
 #endif

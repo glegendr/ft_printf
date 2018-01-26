@@ -6,13 +6,13 @@
 /*   By: glegendr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/20 14:58:58 by glegendr          #+#    #+#             */
-/*   Updated: 2018/01/24 21:45:52 by glegendr         ###   ########.fr       */
+/*   Updated: 2018/01/26 20:37:36 by glegendr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
-#include "ft_restrictions.h"
+# include "ft_restrictions.h"
 # include "libft/includes/vector.h"
 # include "libft/includes/libft.h"
 # include <stdio.h>
@@ -29,6 +29,7 @@ typedef struct	s_st
 	int			string_size;
 }				t_st;
 
+char			*wchar_t_to_str(wchar_t c);
 char			*bin_to_dec(char *s);
 void			ft_print_dec(t_st *t, int *cmpt);
 void			ft_print_hex(t_st *t, int *cmpt);

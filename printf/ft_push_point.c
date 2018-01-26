@@ -6,7 +6,7 @@
 /*   By: glegendr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/28 18:48:35 by glegendr          #+#    #+#             */
-/*   Updated: 2018/01/24 21:45:57 by glegendr         ###   ########.fr       */
+/*   Updated: 2018/01/26 20:38:17 by glegendr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	ft_push_0(t_vec *vec, int *cmpt)
 {
-		v_push(vec, (void *)"0");
-		*cmpt += 1;
+	v_push(vec, (void *)"0");
+	*cmpt += 1;
 }
 
 void	ft_push_0x(t_vec *vec, int *cmpt)
@@ -26,8 +26,8 @@ void	ft_push_0x(t_vec *vec, int *cmpt)
 
 int		ft_skip_0(int *i, unsigned char *t)
 {
-	int y;
-	char *s1;
+	int		y;
+	char	*s1;
 
 	y = 0;
 	while (ft_strcmp(s1 = ft_itoa_base(t[*i], 16, 'x'), "0") == 0)
@@ -40,10 +40,10 @@ int		ft_skip_0(int *i, unsigned char *t)
 
 void	ft_push_pointeur(void *pointeur, t_vec *vec, int *cmpt)
 {
-	unsigned char *t;
-	int i;
-	char *s1;
-	int y;
+	unsigned char	*t;
+	int				i;
+	char			*s1;
+	int				y;
 
 	i = sizeof(pointeur);
 	t = (unsigned char *)malloc(sizeof(pointeur) + 1);

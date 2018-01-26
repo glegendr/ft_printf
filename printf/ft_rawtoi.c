@@ -6,7 +6,7 @@
 /*   By: glegendr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/11 21:27:06 by glegendr          #+#    #+#             */
-/*   Updated: 2018/01/24 21:45:59 by glegendr         ###   ########.fr       */
+/*   Updated: 2018/01/26 20:39:10 by glegendr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,13 @@ int				ft_conv(char const *restrict format, int i)
 	return (0);
 }
 
-int				ft_rawtoi(char const *restrict format, int *i, int *size, int *cmpt)
+int				ft_rawtoi(char const *restrict format,
+		int *i, int *size, int *cmpt)
 {
-	(void)size;
 	int		y;
 	int		j;
 
+	(void)size;
 	y = ft_atoi(&format[*i]);
 	j = y;
 	while (ft_isdigit(format[*i]))

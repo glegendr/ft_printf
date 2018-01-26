@@ -6,7 +6,7 @@
 /*   By: glegendr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/15 19:08:23 by glegendr          #+#    #+#             */
-/*   Updated: 2018/01/16 18:33:24 by glegendr         ###   ########.fr       */
+/*   Updated: 2018/01/26 20:29:18 by glegendr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@ long	ft_puis(long nb, int pui)
 
 char	*bin_to_dec_next(long long ret, int neg)
 {
-	char *s;
-	long long tmp;
-	int i;
+	char		*s;
+	long long	tmp;
+	int			i;
 
 	i = 0;
 	tmp = ret;

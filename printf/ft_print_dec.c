@@ -6,33 +6,12 @@
 /*   By: glegendr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/16 14:54:12 by glegendr          #+#    #+#             */
-/*   Updated: 2018/01/24 21:45:39 by glegendr         ###   ########.fr       */
+/*   Updated: 2018/01/26 20:32:05 by glegendr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include "ft_restrictions.h"
-
-void		ft_flag_is_size(t_st *t, int string_size, t_vec *vec, int *i)
-{
-	if (t->size > 0 && *i < t->size)
-	{
-			while (*i < t->size)
-			{
-				v_push_first(vec, " ");
-				*i += 1;
-			}
-	}
-	else if (t->size < 0)
-	{
-		v_append_raw(vec, t->data, string_size);
-		while (*i < -t->size)
-		{
-			v_push(vec, " ");
-			*i += 1;
-		}
-	}
-}
 
 void		ft_flag_is_pre(int *size, int string_size, t_vec *vec, int *i)
 {
@@ -51,9 +30,9 @@ void		ft_flag_is_pre(int *size, int string_size, t_vec *vec, int *i)
 	}
 }
 
-int		ft_flag_is_space(t_st *t, t_vec *vec, void *data, int *i)
+int			ft_flag_is_space(t_st *t, t_vec *vec, void *data, int *i)
 {
-	if ((t->mask & SPACE) == 0 && ((char *)data)[0] != '-' 
+	if ((t->mask & SPACE) == 0 && ((char *)data)[0] != '-'
 			&& (t->mask & PLUS) == 0)
 		return (0);
 	if (((char *)data)[0] == '-')
@@ -101,19 +80,20 @@ char		*ft_ini_int(t_st *t)
 	else if ((t->mask & LL) == LL)
 		return (bin_to_dec(ft_itoa_base((long long int)t->data, 2, 0)));
 	else if ((t->mask & L) == L)
-		 return (bin_to_dec(ft_itoa_base((long int)t->data, 2, 0)));
+		return (bin_to_dec(ft_itoa_base((long int)t->data, 2, 0)));
 	else if ((t->mask & H) == H)
 		return (bin_to_dec(ft_itoa_base((short int)t->data, 2, 0)));
 	else if ((t->mask & HH) == HH)
 		return (bin_to_dec(ft_itoa_base((signed char)t->data, 2, 0)));
 	return ("Pourquoi tu regarde mon code au juste ?");
 }
+
 void		ft_print_dec(t_st *t, int *cmpt)
 {
-	char *s;
-	t_vec vec;
-	int i;
-	int r;
+	char	*s;
+	t_vec	vec;
+	int		i;
+	int		r;
 
 	i = 0;
 	vec = v_new(sizeof(char));

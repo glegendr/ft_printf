@@ -6,7 +6,7 @@
 /*   By: glegendr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/15 17:00:10 by glegendr          #+#    #+#             */
-/*   Updated: 2018/01/24 21:45:49 by glegendr         ###   ########.fr       */
+/*   Updated: 2018/01/26 20:37:16 by glegendr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,11 @@ void		ft_print(t_vec *vec, char *str, int *cmpt)
 
 int			ft_printf(char const *restrict format, ...)
 {
-	t_vec vec;
-	va_list v;
-	char *str;
-	int cmpt;
-	
+	t_vec		vec;
+	va_list		v;
+	char		*str;
+	int			cmpt;
+
 	if (format[0] == 0)
 		return (0);
 	cmpt = 0;
