@@ -6,7 +6,7 @@
 /*   By: glegendr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/23 13:17:45 by glegendr          #+#    #+#             */
-/*   Updated: 2018/01/26 20:45:32 by glegendr         ###   ########.fr       */
+/*   Updated: 2018/01/27 15:15:13 by glegendr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,109 +22,136 @@ void	ft_ini_struct(t_st *t)
 	t->string_size = 0;
 }
 
+void	ft_first_conv(t_st *t, int *cmpt, char c)
+{
+	if (c == '#')
+	{
+		t->mask = t->mask | SHARP;
+		*cmpt += 1;
+	}
+	else if (c == ' ')
+	{
+		t->mask = t->mask | SPACE;
+		*cmpt += 1;
+	}
+	else if (c == '+')
+	{
+		t->mask |= PLUS;
+		*cmpt += 1;
+	}
+}
+
+void	ft_conv_rawtoi(t_st *t, int *cmpt, char const *restrict s, int *i)
+{
+	if (s[*i] == '.')
+	{
+		*i += 1;
+		*cmpt += 1;
+		t->precision = ft_rawtoi(s, i, NULL, cmpt);
+		if (t->precision == -1)
+			t->precision = 0;
+		t->mask |= PRE;
+	}
+	else if (s[*i] == '-')
+	{
+		*i += 1;
+		*cmpt += 1;
+		t->size = -ft_rawtoi(s, i, NULL, cmpt);
+	}
+	else if (s[*i] == '0')
+	{
+		*cmpt += 1;
+		*i += 1;
+		t->zero = ft_rawtoi(s, i, NULL, cmpt);
+		t->mask |= ZERO;
+	}
+}
+
+void		ft_conv_is_lh(t_st *t, int *cmpt, char c)
+{
+	if (c == 'l')
+	{
+		if ((t->mask & L) == L)
+		{
+			t->mask |= LL;
+			*cmpt += 1;
+		}
+		else
+		{
+			t->mask |= L;
+			*cmpt += 1;
+		}
+	}
+	else if (c == 'h')
+	{
+		if ((t->mask & H) == H)
+		{
+			t->mask |= HH;
+			*cmpt += 1;
+		}
+		else
+		{
+			*cmpt += 1;
+			t->mask |= H;
+		}
+	}
+}
+
+void		ft_conv_is_zj(t_st *t, int *cmpt, char c)
+{
+	if (c == 'z')
+	{
+		if ((t->mask & Z) == Z)
+		{
+			*cmpt += 1;
+		}
+		else
+		{
+			*cmpt += 1;
+			t->mask |= Z;
+		}
+	}
+	else if (c == 'j')
+	{
+		if ((t->mask & J) == J)
+			*cmpt += 1;
+		else
+		{
+			*cmpt += 1;
+			t->mask |= J;
+		}
+	}
+}
+
 int		trouver(char const *restrict s, int i, va_list *v, t_st *t)
 {
 	int		cmpt;
-	char	*s1;
 
 	cmpt = 0;
 	while (!ft_conv(s, i) && s[i])
 	{
-		if (s[i] == '#')
-		{
-			t->mask = t->mask | SHARP;
-			++cmpt;
-		}
-		else if (s[i] == ' ')
-		{
-			t->mask = t->mask | SPACE;
-			++cmpt;
-		}
-		else if (s[i] == '+')
-		{
-			t->mask |= PLUS;
-			++cmpt;
-		}
-		else if (s[i] == '.')
-		{
-			++i;
-			++cmpt;
-			t->precision = ft_rawtoi(s, &i, NULL, &cmpt);
-			if (t->precision == -1)
-				t->precision = 0;
-			t->mask |= PRE;
-		}
-		else if (s[i] == '-')
-		{
-			++i;
-			++cmpt;
-			t->size = -ft_rawtoi(s, &i, NULL, &cmpt);
-		}
+		if (s[i] == '#' || s[i] == ' ' || s[i] == '+')
+			ft_first_conv(t, &cmpt, s[i]);
+		else if (s[i] == '.' || s[i] == '-' || s[i] == '0')
+			ft_conv_rawtoi(t, &cmpt, s, &i);
 		else if (s[i] >= '1' && s[i] <= '9')
 			t->size = ft_rawtoi(s, &i, NULL, &cmpt);
-		else if (s[i] == '0')
-		{
-			++cmpt;
-			++i;
-			t->zero = ft_rawtoi(s, &i, NULL, &cmpt);
-			t->mask |= ZERO;
-		}
-		else if (s[i] == 'l')
-		{
-			if ((t->mask & L) == L)
-			{
-				t->mask |= LL;
-				++i;
-				++cmpt;
-				continue;
-			}
-			t->mask |= L;
-			++cmpt;
-		}
-		else if (s[i] == 'h')
-		{
-			if ((t->mask & HH) == HH)
-			{
-				++cmpt;
-				++i;
-				continue;
-			}
-			else if ((t->mask & H) == H)
-			{
-				t->mask |= HH;
-				++i;
-				++cmpt;
-				continue;
-			}
-			++cmpt;
-			t->mask |= H;
-		}
-		else if (s[i] == 'z')
-		{
-			if ((t->mask & Z) == Z)
-			{
-				++i;
-				++cmpt;
-				continue;
-			}
-			++cmpt;
-			t->mask |= Z;
-		}
-		else if (s[i] == 'j')
-		{
-			if ((t->mask & J) == J)
-			{
-				++i;
-				++cmpt;
-				continue;
-			}
-			++cmpt;
-			t->mask |= J;
-		}
+		else if (s[i] == 'l' || s[i] == 'h')
+			ft_conv_is_lh(t, &cmpt, s[i]);
+		else if (s[i] == 'z' || s[i] == 'j')
+			ft_conv_is_zj(t, &cmpt, s[i]);
 		else
 			++cmpt;
 		++i;
 	}
+	return (cmpt + 1);
+}
+
+void		ft_search_conv(char const *restrict s, int i, va_list *v, t_st *t)
+{
+	char *s1;
+
+	printf("%s\n", &s[i]);
 	if (s[i] == 'p')
 	{
 		t->mask |= POINT;
@@ -219,7 +246,6 @@ int		trouver(char const *restrict s, int i, va_list *v, t_st *t)
 		exit(1);
 	}
 	t->prin = s[i];
-	return (cmpt + 2);
 }
 
 t_vec	ft_pars(char const *restrict s, va_list *v, char **str)
@@ -239,6 +265,8 @@ t_vec	ft_pars(char const *restrict s, va_list *v, char **str)
 			ft_stradd(str, '%');
 			ft_ini_struct(&t);
 			i += trouver(s, i + 1, v, &t);
+			ft_search_conv(s, i, v, &t);
+			i += 2;
 			v_push(&vec, &t);
 		}
 		else
