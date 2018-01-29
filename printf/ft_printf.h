@@ -6,7 +6,7 @@
 /*   By: glegendr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/20 14:58:58 by glegendr          #+#    #+#             */
-/*   Updated: 2018/01/29 22:31:29 by glegendr         ###   ########.fr       */
+/*   Updated: 2018/01/30 00:00:43 by glegendr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,15 @@ void			ft_print_flags(t_st *t, int *cmpt, t_vec vec);
 void			ft_print(t_vec *vec, char *str, int *cmpt);
 int				ft_long_conv(char c);
 void			ft_print_pc(t_st *t, int *cmpt);
+void			ft_pre_is_null(t_st *t, char **s, t_vec *vec, int *cmpt);
 t_vec			ft_pars(char const *restrict s, va_list *v, char **str);
 int				ft_rawtoi(char const *restrict s, int *i, int *size, int *cmpt);
 int				ft_printf(char const *restrict format, ...);
 void			ft_conv_is_zj(t_st *t, int *cmpt, char c);
-void			ft_flag_is_size(t_st *t, int string_s, t_vec *v, int *i);
-void			ft_flag_is_pre(int *size, int string_s, t_vec *v, int *i);
-void			ft_flag_is_sharp(t_st *t, int string_s, t_vec *v, int *i);
-void			ft_flag_is_null(t_st *t, int string_s, t_vec *v, int *i);
-int				ft_flag_is_space(t_st *t, t_vec *vec, void *data, int *i);
+void			ft_flag_is_size(t_st *t, int string_s, t_vec *v);
+void			ft_flag_is_pre(int *size, int string_s, t_vec *v);
+void			ft_flag_is_sharp(t_st *t, int string_s, t_vec *v);
+void			ft_flag_is_null(t_st *t, int string_s, t_vec *v);
+int				ft_flag_is_space(t_st *t, t_vec *vec, void *data);
 int				ft_conv(char const *restrict format, int i);
 #endif

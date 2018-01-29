@@ -6,7 +6,7 @@
 /*   By: glegendr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/17 20:11:19 by glegendr          #+#    #+#             */
-/*   Updated: 2018/01/26 20:36:15 by glegendr         ###   ########.fr       */
+/*   Updated: 2018/01/30 00:06:04 by glegendr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,9 +92,7 @@ void		ft_print_hex(t_st *t, int *cmpt)
 {
 	char	*s;
 	t_vec	vec;
-	int		i;
 
-	i = 0;
 	vec = v_new(sizeof(char));
 	if (t->prin == 'X')
 		s = ft_ini_hex(t);
@@ -104,15 +102,17 @@ void		ft_print_hex(t_st *t, int *cmpt)
 		s = ft_ini_oct(t);
 	else
 		s = ft_ini_unsigned(t);
+	if (t->precision == 0 && s[0] == '0')
+		return (ft_pre_is_null(t, &s, &vec, cmpt));
 	t->data = s;
-	i += ft_strlen(s);
-	ft_flag_is_sharp(t, ft_strlen(s), &vec, &i);
-	ft_flag_is_pre(&t->precision, ft_strlen(s), &vec, &i);
-	ft_flag_is_size(t, ft_strlen(s), &vec, &i);
+	ft_flag_is_sharp(t, ft_strlen(s), &vec);
+	ft_flag_is_pre(&t->precision, ft_strlen(s), &vec);
+	ft_flag_is_size(t, ft_strlen(s), &vec);
 	if (t->size == 0)
-		ft_flag_is_null(t, ft_strlen(s), &vec, &i);
+		ft_flag_is_null(t, ft_strlen(s), &vec);
 	if (t->size >= 0)
 		v_append_raw(&vec, t->data, ft_strlen(s));
 	v_print(&vec, 1);
-	*cmpt += i;
+	*cmpt += v_size(&vec);
+	v_del(&vec);
 }

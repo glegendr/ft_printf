@@ -6,7 +6,7 @@
 /*   By: glegendr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/26 20:31:04 by glegendr          #+#    #+#             */
-/*   Updated: 2018/01/29 22:23:28 by glegendr         ###   ########.fr       */
+/*   Updated: 2018/01/30 00:09:34 by glegendr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,28 +42,22 @@ void	ft_ini_struct(t_st *t)
 	t->string_size = 0;
 }
 
-void	ft_flag_is_size(t_st *t, int string_size, t_vec *vec, int *i)
+void	ft_flag_is_size(t_st *t, int string_size, t_vec *vec)
 {
-	if (t->size > 0 && *i < t->size)
+	if (t->size > 0 && v_size(vec) + string_size < t->size)
 	{
-		while (*i < t->size)
-		{
+		while (v_size(vec) + string_size < t->size)
 			v_push_first(vec, " ");
-			*i += 1;
-		}
 	}
 	else if (t->size < 0)
 	{
 		v_append_raw(vec, t->data, string_size);
-		while (*i < -t->size)
-		{
+		while (v_size(vec) < -t->size)
 			v_push(vec, " ");
-			*i += 1;
-		}
 	}
 }
 
-void	ft_flag_is_sharp(t_st *t, int string_size, t_vec *vec, int *i)
+void	ft_flag_is_sharp(t_st *t, int string_size, t_vec *vec)
 {
 	(void)string_size;
 	if ((t->mask & SHARP) == 0 || t->prin == 'u' || ((char *)t->data)[0] == '0')
@@ -75,10 +69,5 @@ void	ft_flag_is_sharp(t_st *t, int string_size, t_vec *vec, int *i)
 	else if (t->prin == 'b')
 		v_append_raw(vec, "0b", 2);
 	else if (t->prin == 'o' || t->prin == 'O')
-	{
 		v_push(vec, "0");
-		*i += 1;
-		return ;
-	}
-	*i += 2;
 }

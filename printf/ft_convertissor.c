@@ -6,7 +6,7 @@
 /*   By: glegendr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/15 19:08:23 by glegendr          #+#    #+#             */
-/*   Updated: 2018/01/29 22:34:37 by glegendr         ###   ########.fr       */
+/*   Updated: 2018/01/30 00:01:32 by glegendr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,19 @@ void	ft_print_pc(t_st *t, int *cmpt)
 		*cmpt += 1;
 	}
 	*cmpt += 1;
+}
+
+void	ft_pre_is_null(t_st *t, char **s, t_vec *vec, int *cmpt)
+{
+	if (*s != NULL)
+		free(*s);
+	while (t->size-- > 0)
+		v_push(vec, " ");
+	while (++t->size < 0)
+		v_push(vec, " ");
+	v_print(vec, 1);
+	*cmpt += v_size(vec);
+	v_del(vec);
 }
 
 long	ft_puis(long nb, int pui)

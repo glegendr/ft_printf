@@ -6,14 +6,14 @@
 /*   By: glegendr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/16 14:54:12 by glegendr          #+#    #+#             */
-/*   Updated: 2018/01/29 21:02:34 by glegendr         ###   ########.fr       */
+/*   Updated: 2018/01/30 00:24:10 by glegendr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include "ft_restrictions.h"
 
-void		ft_flag_is_pre(int *size, int string_size, t_vec *vec, int *i)
+void		ft_flag_is_pre(int *size, int string_size, t_vec *vec)
 {
 	int y;
 
@@ -23,14 +23,11 @@ void		ft_flag_is_pre(int *size, int string_size, t_vec *vec, int *i)
 	if (string_size < *size)
 	{
 		while (y++ < *size - string_size)
-		{
 			v_push(vec, "0");
-			*i += 1;
-		}
 	}
 }
 
-int			ft_flag_is_space(t_st *t, t_vec *vec, void *data, int *i)
+int			ft_flag_is_space(t_st *t, t_vec *vec, void *data)
 {
 	if ((t->mask & SPACE) == 0 && ((char *)data)[0] != '-'
 			&& (t->mask & PLUS) == 0)
@@ -43,30 +40,21 @@ int			ft_flag_is_space(t_st *t, t_vec *vec, void *data, int *i)
 	}
 	if ((t->mask & PLUS) == PLUS)
 	{
-		*i += 1;
 		v_push(vec, "+");
 		return (0);
 	}
-	*i += 1;
 	v_push(vec, " ");
 	return (0);
 }
 
-void		ft_flag_is_null(t_st *t, int string_size, t_vec *vec, int *i)
+void		ft_flag_is_null(t_st *t, int string_size, t_vec *vec)
 {
-	(void)string_size;
 	if (t->precision != -1)
-		while (*i < t->zero)
-		{
+		while (v_size(vec) + string_size < t->zero)
 			v_push_first(vec, " ");
-			*i += 1;
-		}
 	else
-		while (*i < t->zero)
-		{
+		while (v_size(vec) + string_size < t->zero)
 			v_push(vec, "0");
-			*i += 1;
-		}
 }
 
 char		*ft_ini_int(t_st *t)
@@ -92,24 +80,21 @@ void		ft_print_dec(t_st *t, int *cmpt)
 {
 	char	*s;
 	t_vec	vec;
-	int		i;
 	int		r;
 
-	i = 0;
 	vec = v_new(sizeof(char));
 	s = ft_ini_int(t);
-	t->data = s;
-	i += ft_strlen(s);
-	r = ft_flag_is_space(t, &vec, s, &i);
-	ft_flag_is_pre(&t->precision, ft_strlen(s) + r, &vec, &i);
-	ft_flag_is_size(t, ft_strlen(s), &vec, &i);
+	if (s[0] == '0' && t->precision == 0)
+		return (ft_pre_is_null(t, &s, &vec, cmpt));
+		t->data = s;
+	r = ft_flag_is_space(t, &vec, s);
+	ft_flag_is_pre(&t->precision, ft_strlen(s) + r, &vec);
+	ft_flag_is_size(t, ft_strlen(s) + r, &vec);
 	if (t->size == 0)
-		ft_flag_is_null(t, ft_strlen(s), &vec, &i);
-	if (t->size >= 0 && s[0] == '-')
-		v_append_raw(&vec, t->data, ft_strlen(s) - 1);
-	else if (t->size >= 0 && s[0] != '-')
-		v_append_raw(&vec, t->data, ft_strlen(s));
+		ft_flag_is_null(t, ft_strlen(s) + r, &vec);
+	if (t->size >= 0)
+		v_append_raw(&vec, t->data, ft_strlen(s) + r);
 	v_print(&vec, 1);
+	*cmpt += v_size(&vec);
 	v_del(&vec);
-	*cmpt += i;
 }

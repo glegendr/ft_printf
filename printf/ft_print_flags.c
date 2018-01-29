@@ -6,7 +6,7 @@
 /*   By: glegendr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/15 18:55:09 by glegendr          #+#    #+#             */
-/*   Updated: 2018/01/29 23:02:22 by glegendr         ###   ########.fr       */
+/*   Updated: 2018/01/30 00:02:36 by glegendr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,8 @@ void		ft_putwchar(wchar_t c, t_st *t, int *cmpt)
 	s = wchar_t_to_str(c);
 	if (s[0] == 0)
 	{
-	while (t->size > v_size(&vec) + 1 && t->size > 0)
-		v_push_first(&vec, " ");
+		while (t->size > v_size(&vec) + 1 && t->size > 0)
+			v_push_first(&vec, " ");
 		v_push(&vec, "\0");
 	}
 	v_append_raw(&vec, s, ft_strlen(s));
@@ -102,18 +102,16 @@ void		ft_putwchar(wchar_t c, t_st *t, int *cmpt)
 void		ft_print_bin(t_st *t, int *cmpt)
 {
 	char	*s;
-	int		i;
 	t_vec	vec;
 
 	vec = v_new(sizeof(char));
 	s = ft_itoa_base((int)t->data, 2, 0);
 	t->data = s;
-	i = ft_strlen(s);
-	ft_flag_is_sharp(t, ft_strlen(s), &vec, &i);
-	ft_flag_is_pre(&t->precision, ft_strlen(s), &vec, &i);
-	ft_flag_is_size(t, ft_strlen(s), &vec, &i);
+	ft_flag_is_sharp(t, ft_strlen(s), &vec);
+	ft_flag_is_pre(&t->precision, ft_strlen(s), &vec);
+	ft_flag_is_size(t, ft_strlen(s), &vec);
 	if (t->size == 0)
-		ft_flag_is_null(t, ft_strlen(s), &vec, &i);
+		ft_flag_is_null(t, ft_strlen(s), &vec);
 	if (t->size >= 0)
 		v_append_raw(&vec, t->data, ft_strlen(s));
 	*cmpt += v_size(&vec);
