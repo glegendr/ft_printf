@@ -6,12 +6,28 @@
 /*   By: glegendr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/15 19:08:23 by glegendr          #+#    #+#             */
-/*   Updated: 2018/01/26 20:29:18 by glegendr         ###   ########.fr       */
+/*   Updated: 2018/01/29 22:34:37 by glegendr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include "ft_printf.h"
+
+void	ft_print_pc(t_st *t, int *cmpt)
+{
+	while (t->size-- > 1)
+	{
+		write(1, " ", 1);
+		*cmpt += 1;
+	}
+	write(1, "%", 1);
+	while (++t->size < -1)
+	{
+		write(1, " ", 1);
+		*cmpt += 1;
+	}
+	*cmpt += 1;
+}
 
 long	ft_puis(long nb, int pui)
 {

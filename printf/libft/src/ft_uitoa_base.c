@@ -6,13 +6,13 @@
 /*   By: glegendr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/22 20:59:16 by glegendr          #+#    #+#             */
-/*   Updated: 2018/01/22 21:08:05 by glegendr         ###   ########.fr       */
+/*   Updated: 2018/01/29 21:40:53 by glegendr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static char*ft_conv_low(char const *base_char, unsigned long long nb,
+static char		*ft_conv_low(char const *base_char, unsigned long long nb,
 		unsigned int base)
 {
 	char				*s;
@@ -40,7 +40,7 @@ static char*ft_conv_low(char const *base_char, unsigned long long nb,
 	return (s);
 }
 
-static char*	ft_conv_up(char const *base_char, unsigned long long nb,
+static char		*ft_conv_up(char const *base_char, unsigned long long nb,
 		unsigned int base)
 {
 	char				*s;
@@ -68,7 +68,7 @@ static char*	ft_conv_up(char const *base_char, unsigned long long nb,
 	return (s);
 }
 
-static char	*ft_convertion_base(char flag, unsigned long long nb,
+static char		*ft_convertion_base(char flag, unsigned long long nb,
 		unsigned int base)
 {
 	const char base_char_up[] = "0123456789ABCDEF";
@@ -82,7 +82,7 @@ static char	*ft_convertion_base(char flag, unsigned long long nb,
 		return (ft_conv_up(base_char_up, nb, base));
 }
 
-static char	*ft_convertion(int i, unsigned long long nb,
+static char		*ft_convertion(int i, unsigned long long nb,
 		unsigned int base)
 {
 	char	*s;
@@ -103,7 +103,8 @@ static char	*ft_convertion(int i, unsigned long long nb,
 	return (s);
 }
 
-char		*ft_uitoa_base(unsigned long long nb, unsigned int base, char flag)
+char			*ft_uitoa_base(unsigned long long nb,
+		unsigned int base, char flag)
 {
 	int					i;
 	unsigned long long	n;

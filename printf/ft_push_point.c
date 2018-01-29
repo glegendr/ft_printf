@@ -6,7 +6,7 @@
 /*   By: glegendr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/28 18:48:35 by glegendr          #+#    #+#             */
-/*   Updated: 2018/01/26 20:38:17 by glegendr         ###   ########.fr       */
+/*   Updated: 2018/01/29 21:29:42 by glegendr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	ft_push_0x(t_vec *vec, int *cmpt)
 	*cmpt += 2;
 }
 
-int		ft_skip_0(int *i, unsigned char *t)
+int		ft_skip_0(int *i, unsigned char *t, t_vec *vec, int *cmpt)
 {
 	int		y;
 	char	*s1;
@@ -35,6 +35,7 @@ int		ft_skip_0(int *i, unsigned char *t)
 		--*i;
 		y += ft_strlen(s1);
 	}
+	ft_push_0x(vec, cmpt);
 	return (y + 1);
 }
 
@@ -48,8 +49,7 @@ void	ft_push_pointeur(void *pointeur, t_vec *vec, int *cmpt)
 	i = sizeof(pointeur);
 	t = (unsigned char *)malloc(sizeof(pointeur) + 1);
 	ft_memcpy(t, &pointeur, sizeof(pointeur));
-	y = ft_skip_0(&i, t);
-	ft_push_0x(vec, cmpt);
+	y = ft_skip_0(&i, t, vec, cmpt);
 	if (i < 0)
 		ft_push_0(vec, cmpt);
 	while (i >= 0)
@@ -64,5 +64,6 @@ void	ft_push_pointeur(void *pointeur, t_vec *vec, int *cmpt)
 			v_append_raw(vec, s1, 2);
 	}
 	v_print(vec, 1);
+	v_del(vec);
 	free(t);
 }

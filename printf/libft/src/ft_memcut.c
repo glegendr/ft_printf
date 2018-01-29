@@ -6,7 +6,7 @@
 /*   By: glegendr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/15 19:46:43 by glegendr          #+#    #+#             */
-/*   Updated: 2018/01/16 11:03:12 by glegendr         ###   ########.fr       */
+/*   Updated: 2018/01/29 21:37:39 by glegendr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void		*ft_memcut(void *data, int size)
 {
-	int i;
-	void *tmp;
+	int		i;
+	void	*tmp;
 
 	tmp = malloc(size);
 	i = 0;

@@ -6,7 +6,7 @@
 /*   By: glegendr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/02 18:34:59 by glegendr          #+#    #+#             */
-/*   Updated: 2018/01/17 20:54:37 by glegendr         ###   ########.fr       */
+/*   Updated: 2018/01/29 21:37:23 by glegendr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 static char		*ft_conv_low(char const *base_char, long long nb,
 		int neg, int base)
 {
-	char	*s;
-	int		i;
+	char			*s;
+	int				i;
 	long long		n;
 
 	i = 0;
@@ -116,9 +116,9 @@ static char		*ft_convertion(int i, long long nb, int neg, int base)
 
 char			*ft_itoa_base(long long nb, int base, char flag)
 {
-	int i;
-	long long n;
-	int neg;
+	int			i;
+	long long	n;
+	int			neg;
 
 	neg = 0;
 	i = 0;

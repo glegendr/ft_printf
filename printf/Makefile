@@ -1,9 +1,9 @@
 NAME=libftprintf.a
 CC=gcc
 CFLAG=
-#CFLAG+= -Werror
-#CFLAG+= -Wextra
-#CFLAG+= -Wall
+CFLAG+= -Werror
+CFLAG+= -Wextra
+CFLAG+= -Wall
 #CFLAG+= -fsanitize=address
 SRCNAME= ft_convertissor\
 		 ft_flags\

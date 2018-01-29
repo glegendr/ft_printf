@@ -6,7 +6,7 @@
 /*   By: glegendr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/12 20:26:53 by glegendr          #+#    #+#             */
-/*   Updated: 2018/01/17 18:06:00 by glegendr         ###   ########.fr       */
+/*   Updated: 2018/01/29 21:36:34 by glegendr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ void			v_push(t_vec *vec, void *elem);
 **    elem: the element to add at the end of vector.
 */
 void			v_push_first(t_vec *vec, void *elem);
-
 
 /*
 ** Copy raw at the end of the vector.

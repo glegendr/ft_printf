@@ -6,7 +6,7 @@
 /*   By: glegendr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/15 17:00:10 by glegendr          #+#    #+#             */
-/*   Updated: 2018/01/26 20:37:16 by glegendr         ###   ########.fr       */
+/*   Updated: 2018/01/29 21:30:36 by glegendr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void		ft_print(t_vec *vec, char *str, int *cmpt)
 	t_st	t;
 	t_vec	v;
 
-	v = v_new(sizeof(char));
 	y = 0;
 	i = 0;
 	while (str[i++])
@@ -30,6 +29,7 @@ void		ft_print(t_vec *vec, char *str, int *cmpt)
 		}
 		else
 		{
+			v = v_new(sizeof(char));
 			t = *(t_st *)v_get(vec, y);
 			ft_print_flags(&t, cmpt, v);
 			++y;

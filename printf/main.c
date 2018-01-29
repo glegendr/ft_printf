@@ -6,18 +6,23 @@
 /*   By: glegendr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/27 15:01:53 by glegendr          #+#    #+#             */
-/*   Updated: 2018/01/27 15:03:58 by glegendr         ###   ########.fr       */
+/*   Updated: 2018/01/29 23:02:41 by glegendr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include <locale.h>
 
-int main(int argc, const char *argv[])
+int		main(int argc, const char *argv[])
 {
+	long int i;
+
+	i = 4294967296;
 	setlocale(LC_ALL, "");
-	printf("\t%i\n", ft_printf(argv[1], 0, L'ڛ',L'ڜ',L'ڝ', L'ڞ', L'ڟ'));
+	//printf(argv[1], NULL);
+	ft_printf("@moulitest: %27c", 0);
 	printf("\n");
-	printf("\t%i\n", printf(argv[1], 0, L'ڛ',L'ڜ',L'ڝ', L'ڞ', L'ڟ'));
-	return 0;
+	printf("@moulitest: %27c", 0);
+//	ft_printf(argv[1], NULL);
+	return (0);
 }

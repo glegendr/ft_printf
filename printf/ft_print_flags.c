@@ -6,18 +6,25 @@
 /*   By: glegendr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/15 18:55:09 by glegendr          #+#    #+#             */
-/*   Updated: 2018/01/26 20:34:21 by glegendr         ###   ########.fr       */
+/*   Updated: 2018/01/29 23:02:22 by glegendr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include "ft_restrictions.h"
 
-void		ft_print_s(t_st *t, int i, int *cmpt)
+void		ft_print_s(t_st *t, int *cmpt)
 {
 	t_vec	vec;
 	int		z;
 
+	if (t->data == NULL)
+	{
+		ft_putstr("(null)");
+		*cmpt += 6;
+		return ;
+	}
+	t->string_size = ft_strlen(t->data);
 	z = t->string_size;
 	vec = v_new(sizeof(char));
 	if (t->precision != -1 && t->string_size > t->precision)
@@ -51,7 +58,7 @@ int			ft_print_ls(wchar_t *s, int precision, int size, int zero)
 	while (s[i])
 	{
 		s1 = wchar_t_to_str(s[i]);
-		if (precision > 0 && v_size(&vec) + ft_strlen(s1) > precision)
+		if (precision > 0 && (int)(v_size(&vec) + ft_strlen(s1)) > precision)
 			break ;
 		v_append_raw(&vec, s1, ft_strlen(s1));
 		++i;
@@ -76,7 +83,11 @@ void		ft_putwchar(wchar_t c, t_st *t, int *cmpt)
 	vec = v_new(sizeof(char));
 	s = wchar_t_to_str(c);
 	if (s[0] == 0)
-		*cmpt += 1;
+	{
+	while (t->size > v_size(&vec) + 1 && t->size > 0)
+		v_push_first(&vec, " ");
+		v_push(&vec, "\0");
+	}
 	v_append_raw(&vec, s, ft_strlen(s));
 	while (t->size > v_size(&vec) && t->size > 0)
 		v_push_first(&vec, " ");
@@ -112,8 +123,10 @@ void		ft_print_bin(t_st *t, int *cmpt)
 
 void		ft_print_flags(t_st *t, int *cmpt, t_vec vec)
 {
-	if (t->prin == 's' && (t->mask & L) == 0)
-		ft_print_s(t, 0, cmpt);
+	if ((t->mask & PC) == PC)
+		ft_print_pc(t, cmpt);
+	else if (t->prin == 's' && (t->mask & L) == 0)
+		ft_print_s(t, cmpt);
 	else if (t->prin == 's' || t->prin == 'S')
 		*cmpt += ft_print_ls(t->data, t->precision, t->size, t->zero);
 	else if (t->prin == 'p')
@@ -130,9 +143,5 @@ void		ft_print_flags(t_st *t, int *cmpt, t_vec vec)
 		ft_print_hex(t, cmpt);
 	else if (t->prin == 'b')
 		ft_print_bin(t, cmpt);
-	else if ((t->mask & PC) == PC)
-	{
-		write(1, "%", 1);
-		*cmpt += 1;
-	}
+	v_del(&vec);
 }

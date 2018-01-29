@@ -6,7 +6,7 @@
 /*   By: glegendr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/16 14:54:12 by glegendr          #+#    #+#             */
-/*   Updated: 2018/01/26 20:32:05 by glegendr         ###   ########.fr       */
+/*   Updated: 2018/01/29 21:02:34 by glegendr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,10 +81,10 @@ char		*ft_ini_int(t_st *t)
 		return (bin_to_dec(ft_itoa_base((long long int)t->data, 2, 0)));
 	else if ((t->mask & L) == L)
 		return (bin_to_dec(ft_itoa_base((long int)t->data, 2, 0)));
-	else if ((t->mask & H) == H)
-		return (bin_to_dec(ft_itoa_base((short int)t->data, 2, 0)));
 	else if ((t->mask & HH) == HH)
 		return (bin_to_dec(ft_itoa_base((signed char)t->data, 2, 0)));
+	else if ((t->mask & H) == H)
+		return (bin_to_dec(ft_itoa_base((short int)t->data, 2, 0)));
 	return ("Pourquoi tu regarde mon code au juste ?");
 }
 
@@ -110,5 +110,6 @@ void		ft_print_dec(t_st *t, int *cmpt)
 	else if (t->size >= 0 && s[0] != '-')
 		v_append_raw(&vec, t->data, ft_strlen(s));
 	v_print(&vec, 1);
+	v_del(&vec);
 	*cmpt += i;
 }
