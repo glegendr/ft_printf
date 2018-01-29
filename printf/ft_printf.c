@@ -6,7 +6,7 @@
 /*   By: glegendr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/15 17:00:10 by glegendr          #+#    #+#             */
-/*   Updated: 2018/01/29 21:30:36 by glegendr         ###   ########.fr       */
+/*   Updated: 2018/01/30 00:32:17 by glegendr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,5 +49,7 @@ int			ft_printf(char const *restrict format, ...)
 	va_start(v, format);
 	vec = ft_pars(format, &v, &str);
 	ft_print(&vec, str, &cmpt);
+	free(str);
+	v_del(&vec);
 	return (cmpt);
 }
