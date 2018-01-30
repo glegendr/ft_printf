@@ -6,7 +6,7 @@
 /*   By: glegendr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/20 14:58:58 by glegendr          #+#    #+#             */
-/*   Updated: 2018/01/30 00:00:43 by glegendr         ###   ########.fr       */
+/*   Updated: 2018/01/30 22:09:01 by glegendr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void			ft_print_dec(t_st *t, int *cmpt);
 void			ft_print_hex(t_st *t, int *cmpt);
 void			ft_print_unsigned(t_st *t, int *cmpt);
 void			ft_print_oct(t_st *t, int *cmpt);
-void			ft_push_pointeur(void *data, t_vec *vec, int *cmpt);
+void			ft_push_pointeur(void *data, int *cmpt, t_st *t);
 void			ft_print_flags(t_st *t, int *cmpt, t_vec vec);
 void			ft_print(t_vec *vec, char *str, int *cmpt);
 int				ft_long_conv(char c);

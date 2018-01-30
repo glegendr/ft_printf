@@ -6,7 +6,7 @@
 /*   By: glegendr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/15 19:08:23 by glegendr          #+#    #+#             */
-/*   Updated: 2018/01/30 00:01:32 by glegendr         ###   ########.fr       */
+/*   Updated: 2018/01/30 20:49:44 by glegendr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,11 @@ void	ft_print_pc(t_st *t, int *cmpt)
 		write(1, " ", 1);
 		*cmpt += 1;
 	}
+	while (t->zero-- > 1 && (t->size >= -1))
+	{
+		write(1, "0", 1);
+		*cmpt += 1;
+	}
 	write(1, "%", 1);
 	while (++t->size < -1)
 	{
@@ -31,12 +36,15 @@ void	ft_print_pc(t_st *t, int *cmpt)
 
 void	ft_pre_is_null(t_st *t, char **s, t_vec *vec, int *cmpt)
 {
-	if (*s != NULL)
+	if (s != NULL && *s != NULL)
 		free(*s);
+	while (t->zero-- > 0 && t->size == 0)
+		v_push(vec, " ");
 	while (t->size-- > 0)
 		v_push(vec, " ");
 	while (++t->size < 0)
 		v_push(vec, " ");
+	ft_flag_is_sharp(t, 0, vec);
 	v_print(vec, 1);
 	*cmpt += v_size(vec);
 	v_del(vec);
@@ -58,12 +66,13 @@ long	ft_puis(long nb, int pui)
 	return (nb);
 }
 
-char	*bin_to_dec_next(long long ret, int neg)
+char	*bin_to_dec_next(long long ret, int neg, char **s1)
 {
 	char		*s;
 	long long	tmp;
 	int			i;
 
+	free(*s1);
 	i = 0;
 	tmp = ret;
 	while ((tmp = (tmp / 10)) > 0)
@@ -88,7 +97,10 @@ char	*bin_to_dec(char *s)
 	long long y;
 
 	if (ft_strcmp(s, "-") == 0)
+	{
+		free(s);
 		return (ft_strdup("-9223372036854775808"));
+	}
 	y = 0;
 	ret = 0;
 	i = ft_strlen(s) - 1;
@@ -102,6 +114,6 @@ char	*bin_to_dec(char *s)
 		--i;
 	}
 	if (s[0] == '-')
-		return (bin_to_dec_next(ret, 1));
-	return (bin_to_dec_next(ret, 0));
+		return (bin_to_dec_next(ret, 1, &s));
+	return (bin_to_dec_next(ret, 0, &s));
 }

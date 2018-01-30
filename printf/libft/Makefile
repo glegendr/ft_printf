@@ -84,6 +84,7 @@ SRCNAME= ft_isprint \
 		 v_size\
 		 v_split\
 		 v_del\
+		 v_del_last\
 		 v_raw\
 
 OBJDIR=obj/

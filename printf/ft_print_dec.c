@@ -6,7 +6,7 @@
 /*   By: glegendr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/16 14:54:12 by glegendr          #+#    #+#             */
-/*   Updated: 2018/01/30 00:24:10 by glegendr         ###   ########.fr       */
+/*   Updated: 2018/01/30 19:15:28 by glegendr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,5 +96,6 @@ void		ft_print_dec(t_st *t, int *cmpt)
 		v_append_raw(&vec, t->data, ft_strlen(s) + r);
 	v_print(&vec, 1);
 	*cmpt += v_size(&vec);
+	free(s);
 	v_del(&vec);
 }

@@ -6,7 +6,7 @@
 /*   By: glegendr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/12 20:26:53 by glegendr          #+#    #+#             */
-/*   Updated: 2018/01/29 21:36:34 by glegendr         ###   ########.fr       */
+/*   Updated: 2018/01/30 23:19:09 by glegendr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,14 @@ int				v_size(t_vec *vec);
 **    vec: the vector to delete.
 */
 void			v_del(t_vec *vec);
+
+/*
+** Del the last Param.
+**
+** Param:
+**    vec: the vector to delete.
+*/
+void			v_del_last(t_vec *vec);
 
 /*
 ** Add the second vector at the end of the first.

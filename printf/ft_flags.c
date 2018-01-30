@@ -6,7 +6,7 @@
 /*   By: glegendr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/26 20:31:04 by glegendr          #+#    #+#             */
-/*   Updated: 2018/01/30 00:09:34 by glegendr         ###   ########.fr       */
+/*   Updated: 2018/01/30 20:21:20 by glegendr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,9 @@ void	ft_flag_is_size(t_st *t, int string_size, t_vec *vec)
 
 void	ft_flag_is_sharp(t_st *t, int string_size, t_vec *vec)
 {
-	(void)string_size;
-	if ((t->mask & SHARP) == 0 || t->prin == 'u' || ((char *)t->data)[0] == '0')
+	if ((t->mask & SHARP) == 0 || t->prin == 'u' ||
+			(((char *)t->data)[0] == '0' && string_size != 0) ||
+			(((char *)t->data)[0] == '0' && (t->prin == 'x' || t->prin == 'X')))
 		return ;
 	if (t->prin == 'x')
 		v_append_raw(vec, "0x", 2);

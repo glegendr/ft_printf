@@ -6,7 +6,7 @@
 /*   By: glegendr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/15 18:55:09 by glegendr          #+#    #+#             */
-/*   Updated: 2018/01/30 00:02:36 by glegendr         ###   ########.fr       */
+/*   Updated: 2018/01/30 22:08:44 by glegendr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,16 @@ void		ft_print_s(t_st *t, int *cmpt)
 	t_vec	vec;
 	int		z;
 
-	if (t->data == NULL)
+	if (t->data == NULL && t->precision != 0)
 	{
 		ft_putstr("(null)");
 		*cmpt += 6;
 		return ;
 	}
+	while (t->data == NULL && t->zero-- > 0 && ++*cmpt)
+		write(1, "0", 1);
+	if (t->data == NULL)
+		return ;
 	t->string_size = ft_strlen(t->data);
 	z = t->string_size;
 	vec = v_new(sizeof(char));
@@ -72,7 +76,10 @@ int			ft_print_ls(wchar_t *s, int precision, int size, int zero)
 	while (size > v_size(&vec) && zero != 0)
 		v_push_first(&vec, "0");
 	v_print(&vec, 1);
-	return (v_size(&vec));
+	free(s1);
+	i = v_size(&vec);
+	v_del(&vec);
+	return (i);
 }
 
 void		ft_putwchar(wchar_t c, t_st *t, int *cmpt)
@@ -86,6 +93,8 @@ void		ft_putwchar(wchar_t c, t_st *t, int *cmpt)
 	{
 		while (t->size > v_size(&vec) + 1 && t->size > 0)
 			v_push_first(&vec, " ");
+		while (t->size == 0 && t->zero > v_size(&vec) + 1)
+			v_push_first(&vec, "0");
 		v_push(&vec, "\0");
 	}
 	v_append_raw(&vec, s, ft_strlen(s));
@@ -93,6 +102,8 @@ void		ft_putwchar(wchar_t c, t_st *t, int *cmpt)
 		v_push_first(&vec, " ");
 	while (t->size < -v_size(&vec) && t->size < 0)
 		v_push(&vec, " ");
+	while (t->size == 0 && t->zero > v_size(&vec))
+		v_push_first(&vec, "0");
 	v_print(&vec, 1);
 	*cmpt += v_size(&vec);
 	v_del(&vec);
@@ -117,6 +128,7 @@ void		ft_print_bin(t_st *t, int *cmpt)
 	*cmpt += v_size(&vec);
 	v_print(&vec, 1);
 	v_del(&vec);
+	free(s);
 }
 
 void		ft_print_flags(t_st *t, int *cmpt, t_vec vec)
@@ -128,7 +140,7 @@ void		ft_print_flags(t_st *t, int *cmpt, t_vec vec)
 	else if (t->prin == 's' || t->prin == 'S')
 		*cmpt += ft_print_ls(t->data, t->precision, t->size, t->zero);
 	else if (t->prin == 'p')
-		ft_push_pointeur(t->data, &vec, cmpt);
+		ft_push_pointeur(t->data, cmpt, t);
 	else if (t->prin == 'c' || t->prin == 'C')
 		if ((t->mask & L) == L)
 			ft_putwchar((wchar_t)t->data, t, cmpt);
@@ -141,5 +153,5 @@ void		ft_print_flags(t_st *t, int *cmpt, t_vec vec)
 		ft_print_hex(t, cmpt);
 	else if (t->prin == 'b')
 		ft_print_bin(t, cmpt);
-	v_del(&vec);
+			v_del(&vec);
 }

@@ -6,7 +6,7 @@
 /*   By: glegendr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/23 13:17:45 by glegendr          #+#    #+#             */
-/*   Updated: 2018/01/30 00:30:38 by glegendr         ###   ########.fr       */
+/*   Updated: 2018/01/30 20:33:17 by glegendr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,10 +99,14 @@ static int	find_conv(char const *restrict s, int i, va_list *v, t_st *t)
 			++cmpt;
 		++i;
 	}
+	if (!s[i])
+		return (cmpt += 2);
 	if (s[i] != '%' && ft_conv(s, i))
 		t->data = va_arg(*v, char *);
-	else
+	else if (s[i] == '%')
 		t->mask |= PC;
+	else
+		t->data = NULL;
 	t->prin = s[i];
 	return (cmpt + 2);
 }
@@ -119,7 +123,7 @@ t_vec		ft_pars(char const *restrict s, va_list *v, char **str)
 		*str = NULL;
 	while (s[i])
 	{
-		if (s[i] == '%')
+		if (s[i] == '%' && s[i + 1])
 		{
 			ft_stradd(str, '%');
 			ft_ini_struct(&t);

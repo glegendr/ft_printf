@@ -6,64 +6,45 @@
 /*   By: glegendr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/28 18:48:35 by glegendr          #+#    #+#             */
-/*   Updated: 2018/01/29 21:29:42 by glegendr         ###   ########.fr       */
+/*   Updated: 2018/01/30 23:35:29 by glegendr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	ft_push_0(t_vec *vec, int *cmpt)
+void		ft_flag_is_p_pre(t_st *t, t_vec *vec)
 {
-	v_push(vec, (void *)"0");
-	*cmpt += 1;
+	if (t->precision == 0 && ft_strcmp((char *)v_get(vec, 0), "0") == 0)
+		v_del_last(vec);
+	while (t->precision > 0 + v_size(vec))
+		v_push_first(vec, "0");
 }
 
-void	ft_push_0x(t_vec *vec, int *cmpt)
+void		ft_push_pointeur(void *pointeur, int *cmpt, t_st *t)
 {
-	v_append_raw(vec, (void *)"0x", 2);
-	*cmpt += 2;
-}
+	int i;
+	char *s;
+	int r;
+	t_vec vec;
 
-int		ft_skip_0(int *i, unsigned char *t, t_vec *vec, int *cmpt)
-{
-	int		y;
-	char	*s1;
-
-	y = 0;
-	while (ft_strcmp(s1 = ft_itoa_base(t[*i], 16, 'x'), "0") == 0)
-	{
-		--*i;
-		y += ft_strlen(s1);
-	}
-	ft_push_0x(vec, cmpt);
-	return (y + 1);
-}
-
-void	ft_push_pointeur(void *pointeur, t_vec *vec, int *cmpt)
-{
-	unsigned char	*t;
-	int				i;
-	char			*s1;
-	int				y;
-
-	i = sizeof(pointeur);
-	t = (unsigned char *)malloc(sizeof(pointeur) + 1);
-	ft_memcpy(t, &pointeur, sizeof(pointeur));
-	y = ft_skip_0(&i, t, vec, cmpt);
-	if (i < 0)
-		ft_push_0(vec, cmpt);
+	vec = v_new(sizeof(char));
+	i = sizeof(pointeur) - 1;
+	while (((*((long *)&pointeur) >> i * 8) & 0xff) == 0 && i > 0)
+		--i;
+	r = i;
 	while (i >= 0)
 	{
-		*cmpt += ft_strlen(s1 = ft_itoa_base(t[i--], 16, 'x'));
-		if (ft_strlen(s1) == 1 && i + y != sizeof(pointeur))
-		{
-			ft_push_0(vec, cmpt);
-			v_push(vec, (void *)s1);
-		}
-		else
-			v_append_raw(vec, s1, 2);
+		s = ft_itoa_base(((*((long *)&pointeur) >> i-- * 8) & 0xff), 16, 'x');
+		if (ft_strlen(s) == 1 && i + 1 != r)
+			v_push(&vec, "0");
+		v_append_raw(&vec, s, ft_strlen(s));
+		free(s);
 	}
-	v_print(vec, 1);
-	v_del(vec);
-	free(t);
+	ft_flag_is_p_pre(t, &vec);
+	v_push_first(&vec ,"x");
+	v_push_first(&vec ,"0");
+	ft_flag_is_size(t, 0, &vec);
+	v_print(&vec, 1);
+	*cmpt += v_size(&vec);
+	v_del(&vec);
 }
