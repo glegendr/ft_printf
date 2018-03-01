@@ -6,7 +6,7 @@
 /*   By: glegendr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/20 14:58:58 by glegendr          #+#    #+#             */
-/*   Updated: 2018/01/31 23:11:23 by glegendr         ###   ########.fr       */
+/*   Updated: 2018/03/01 01:23:10 by glegendr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ typedef struct	s_st
 
 int				ft_flags(char c);
 void			ft_ini_struct(t_st *t);
-char			*wchar_t_to_str(wchar_t c);
+void			wchar_t_is_null(int *cmpt);
+char			*wchar_t_to_str(wchar_t c, int i);
 char			*bin_to_dec(char *s);
 void			ft_print_dec(t_st *t, int *cmpt);
 void			ft_print_hex(t_st *t, int *cmpt);

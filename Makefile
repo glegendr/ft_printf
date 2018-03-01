@@ -4,7 +4,7 @@ CFLAG=
 CFLAG+= -Werror
 CFLAG+= -Wextra
 CFLAG+= -Wall
-#CFLAG+= -fsanitize=address
+CFLAG+= -fmodules
 SRCNAME= ft_convertissor\
 		 ft_flags\
 		 ft_pars\

@@ -6,7 +6,7 @@
 /*   By: glegendr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/15 19:08:23 by glegendr          #+#    #+#             */
-/*   Updated: 2018/01/30 20:49:44 by glegendr         ###   ########.fr       */
+/*   Updated: 2018/02/28 19:24:24 by glegendr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,10 @@ void	ft_pre_is_null(t_st *t, char **s, t_vec *vec, int *cmpt)
 	while (t->size-- > 0)
 		v_push(vec, " ");
 	while (++t->size < 0)
+		v_push(vec, " ");
+	if ((t->mask & PLUS) == PLUS)
+		v_push(vec, "+");
+	if ((t->mask & SPACE) == SPACE)
 		v_push(vec, " ");
 	ft_flag_is_sharp(t, 0, vec);
 	v_print(vec, 1);

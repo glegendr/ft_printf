@@ -6,7 +6,7 @@
 /*   By: glegendr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/15 18:55:09 by glegendr          #+#    #+#             */
-/*   Updated: 2018/01/31 23:12:09 by glegendr         ###   ########.fr       */
+/*   Updated: 2018/03/01 02:15:37 by glegendr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,11 @@ int			ft_print_ls(wchar_t *s, int precision, int *cmpt, t_st *t)
 	vec = v_new(sizeof(char));
 	while (s[i] && precision != 0)
 	{
-		s1 = wchar_t_to_str(s[i]);
+		if ((s1 = wchar_t_to_str(s[i++], 0)) == NULL)
+			continue ;
 		if (precision > 0 && (int)(v_size(&vec) + ft_strlen(s1)) > precision)
 			break ;
 		v_append_raw(&vec, s1, ft_strlen(s1));
-		++i;
 		free(s1);
 	}
 	ft_s_flags(t, &vec);
@@ -64,13 +64,14 @@ int			ft_print_ls(wchar_t *s, int precision, int *cmpt, t_st *t)
 	return (i);
 }
 
-void		ft_putwchar(wchar_t c, t_st *t, int *cmpt)
+void		ft_putwchar(wchar_t c, t_st *t, int *cmpt, int i)
 {
 	t_vec	vec;
 	char	*s;
 
+	if ((s = wchar_t_to_str(c, i)) == NULL)
+		return (wchar_t_is_null(cmpt));
 	vec = v_new(sizeof(char));
-	s = wchar_t_to_str(c);
 	if (s[0] == 0)
 	{
 		while (t->size > v_size(&vec) + 1 && t->size > 0)
@@ -118,7 +119,7 @@ void		ft_print_flags(t_st *t, int *cmpt)
 	if ((t->mask & PC) == PC)
 		ft_print_pc(t, cmpt);
 	else if (!ft_conv(t->prin))
-		ft_putwchar((char)t->prin, t, cmpt);
+		ft_putwchar((char)t->prin, t, cmpt, 0);
 	else if (t->prin == 's' && (t->mask & L) == 0)
 		ft_print_s(t, cmpt, 0);
 	else if (t->prin == 's' || t->prin == 'S')
@@ -127,9 +128,9 @@ void		ft_print_flags(t_st *t, int *cmpt)
 		ft_push_pointeur(t->data, cmpt, t);
 	else if (t->prin == 'c' || t->prin == 'C')
 		if ((t->mask & L) == L)
-			ft_putwchar((wchar_t)t->data, t, cmpt);
+			ft_putwchar((wchar_t)t->data, t, cmpt, 0);
 		else
-			ft_putwchar((char)t->data, t, cmpt);
+			ft_putwchar((char)t->data, t, cmpt, 1);
 	else if (t->prin == 'i' || t->prin == 'd' || t->prin == 'D')
 		ft_print_dec(t, cmpt);
 	else if (t->prin == 'x' || t->prin == 'X' || t->prin == 'O' ||

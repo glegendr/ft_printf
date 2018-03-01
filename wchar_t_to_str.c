@@ -6,7 +6,7 @@
 /*   By: glegendr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 21:23:57 by glegendr          #+#    #+#             */
-/*   Updated: 2018/01/29 19:26:57 by glegendr         ###   ########.fr       */
+/*   Updated: 2018/03/01 02:16:06 by glegendr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,14 +54,26 @@ static char		*wchar8_to_str(wchar_t c)
 	return (s);
 }
 
-char			*wchar_t_to_str(wchar_t c)
+char			*wchar_t_to_str(wchar_t c, int i)
 {
-	if (c <= 127)
+	char *s;
+
+	if (i == 1)
+	{
+		s = ft_strnew(1);
+		s[0] = (char)c;
+		return (s);
+	}
+	if (c < 0 || (c >= 0xD800 && c <= 0xDFFF))
+		return (NULL);
+	else if (c <= 0x007f)
 		return (wchar8_to_str(c));
-	else if (c <= 2047)
+	else if (c <= 0x07ff)
 		return (wchar16_to_str(c));
-	else if (c <= 65535)
+	else if (c <= 0xffff)
 		return (wchar24_to_str(c));
-	else
+	else if (c <= 0x10ffff)
 		return (wchar32_to_str(c));
+	else
+		return (NULL);
 }

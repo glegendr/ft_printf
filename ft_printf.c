@@ -6,7 +6,7 @@
 /*   By: glegendr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/15 17:00:10 by glegendr          #+#    #+#             */
-/*   Updated: 2018/01/31 22:57:48 by glegendr         ###   ########.fr       */
+/*   Updated: 2018/03/01 01:22:34 by glegendr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,9 @@ int			ft_printf(char const *restrict format, ...)
 	free(str);
 	v_del(&vec);
 	return (cmpt);
+}
+
+void		wchar_t_is_null(int *cmpt)
+{
+	*cmpt -= 1;
 }

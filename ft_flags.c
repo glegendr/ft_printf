@@ -6,7 +6,7 @@
 /*   By: glegendr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/26 20:31:04 by glegendr          #+#    #+#             */
-/*   Updated: 2018/01/31 22:13:36 by glegendr         ###   ########.fr       */
+/*   Updated: 2018/02/28 19:30:41 by glegendr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	ft_flag_is_sharp(t_st *t, int string_size, t_vec *vec)
 	else if (t->prin == 'b')
 		v_append_raw(vec, "0b", 2);
 	else if (((t->prin == 'o' || t->prin == 'O') &&
-				t->precision < string_size) ||
+				t->precision <= string_size) ||
 			((t->prin == 'o' || t->prin == 'O') && ((char *)t->data)[0] == '0'))
 		v_push(vec, "0");
 }
