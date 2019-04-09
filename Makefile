@@ -1,60 +1,49 @@
+.PHONY: all re fclean clean
 NAME=libftprintf.a
 CC=gcc
 CFLAG=
 CFLAG+= -Werror
 CFLAG+= -Wextra
 CFLAG+= -Wall
-CFLAG+= -fmodules
-SRCNAME= ft_convertissor\
-		 ft_flags\
-		 ft_pars\
-		 ft_print_dec\
-		 ft_print_flags\
-		 ft_print_hex\
-		 ft_printf\
-		 ft_push_point\
-		 ft_rawtoi\
-		 ft_str_is_null\
-		 wchar_t_to_str
+#CFLAG+= -fsanitize=address
+SRCNAME= ft_print_hex ft_pars wchar_t_to_str ft_print_dec ft_str_is_null ft_convertissor ft_push_point ft_printf ft_print_flags ft_flags ft_rawtoi
 
-OBJDIR=obj/
-CLEANOBJDIR=OBJDIR
-CLEANOBJ=OBJ
-SRCDIR=./
-LIBFTDIR=./libft
-LIBFT=./libft/libft.a
+LIBS= ./pods/libvec/libvec.a ./pods/libft/libft.a
+
+CC_LIBS= make -C ./pods/libvec/; make -C ./pods/libft/;
+
+INC_DIR_LIBS= -I ./pods/libvec/inc -I ./pods/libft/inc
+
+INC_DIR=./inc/
+
+OBJDIR=./obj/
+SRCDIR=./src/
 
 SRC= $(addprefix $(SRCDIR), $(addsuffix .c, $(SRCNAME)))
 
 OBJ= $(addprefix $(OBJDIR), $(addsuffix .o, $(SRCNAME)))
 
-INCDIR= include/
-
 all: $(NAME)
 
-$(NAME): $(LIBFT) $(OBJDIR) $(OBJ)
-	@ar -rc tmp.a $(OBJ)
-	@libtool -static -o $(NAME) tmp.a $(LIBFT)
-	@rm -rf tmp.a
+$(NAME): $(OBJDIR) $(OBJ)
+	@$(CC_LIBS)
+	ar -rc tmp.a $(OBJ) $(INCDIR)
+	libtool -static -o $(NAME) tmp.a $(LIBS)
+	rm -rf tmp.a
 	@(echo "[ \033[35m$(NAME)\033[00m ]")
 
-$(LIBFT):
-	@$(MAKE) -C $(LIBFTDIR)
-
 $(OBJDIR)%.o: $(SRCDIR)%.c
-	@$(CC) $(CFLAG) -c $< -o $@
+	@$(CC) $(CFLAG) -c $< -o $@ -I $(INC_DIR) $(INC_DIR_LIBS)
 	@(echo "\033[32m$@\033[00m")
 
 $(OBJDIR):
 	@mkdir -p $(OBJDIR)
 
 clean:
-	@rm -rf $(OBJ) $(OBJDIR)  
-	@make -C libft/. clean
-	@(echo "\033[32mit is clean")
+	@rm -rf $(OBJ) $(OBJDIR)
+	@(echo "\033[32mcleaned\033[00m")
 
 fclean: clean
 	@rm -rf $(NAME)
-	@make -C libft/. fclean
 
 re: fclean all
