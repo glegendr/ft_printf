@@ -16,26 +16,24 @@
 static char		*ft_print_s(t_st *t)
 {
 	t_vec	vec;
-	int z;
 
 	vec = v_new(sizeof(char));
 	if (t->data == NULL)
 		return (ft_str_is_null(t, &vec));
 	t->string_size = ft_strlen(t->data);
-	z = t->string_size;
 	if (t->precision != -1 && t->string_size > t->precision)
 	{
 		ft_memcut(t->data, t->precision);
-		z -= t->string_size - t->precision;
 		t->string_size = t->precision;
 	}
 	v_append_raw(&vec, t->data, t->string_size);
+	v_push_int(&vec, '\0');
 	ft_s_flags(t, &vec);
 //	v_print(&vec, 1);
 //	*cmpt += v_size(&vec);
 //	v_del(&vec);
-	char *tmp = NULL;
-	ft_strcpy(tmp, (char *)v_raw(&vec));
+	char *tmp;
+	tmp = ft_strdup((char *)v_raw(&vec));
 	v_del(&vec);
 	return (tmp);
 	return ((char *)v_raw(&vec));
@@ -60,13 +58,18 @@ static char		*ft_print_ls(wchar_t *s, int precision, t_st *t)
 		v_append_raw(&vec, s1, ft_strlen(s1));
 		free(s1);
 	}
+	v_push_int(&vec, '\0');
 	ft_s_flags(t, &vec);
 //	v_print(&vec, 1);
 //	i = v_size(&vec);
 //	v_del(&vec);
 //	return (i);
-	char *tmp = NULL;
+/*	char *tmp = NULL;
 	ft_strcpy(tmp, (char *)v_raw(&vec));
+	v_del(&vec);
+	return (tmp);*/
+	char *tmp;
+	tmp = ft_strdup((char *)v_raw(&vec));
 	v_del(&vec);
 	return (tmp);
 	return ((char *)v_raw(&vec));
@@ -95,9 +98,14 @@ static char		*ft_putwchar(wchar_t c, t_st *t, int i)
 		v_push(&vec, " ");
 	while (t->size == 0 && t->zero > v_size(&vec))
 		v_push_first(&vec, "0");
+	v_push_int(&vec, '\0');
 	free(s);
-	char *tmp = NULL;
+/*	char *tmp = NULL;
 	ft_strcpy(tmp, (char *)v_raw(&vec));
+	v_del(&vec);
+	return (tmp);*/
+	char *tmp;
+	tmp = ft_strdup((char *)v_raw(&vec));
 	v_del(&vec);
 	return (tmp);
 	return ((char *)v_raw(&vec));
@@ -122,8 +130,13 @@ static char		*ft_print_bin(t_st *t)
 //	v_print(&vec, 1);
 //	v_del(&vec);
 	free(s);
-	char *tmp = NULL;
+/*	char *tmp = NULL;
 	ft_strcpy(tmp, (char *)v_raw(&vec));
+	v_del(&vec);
+	return (tmp);*/
+	v_push_int(&vec, '\0');
+	char *tmp;
+	tmp = ft_strdup((char *)v_raw(&vec));
 	v_del(&vec);
 	return (tmp);
 	return ((char *)v_raw(&vec));

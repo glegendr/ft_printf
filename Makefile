@@ -1,4 +1,4 @@
-.PHONY: all re fclean clean
+.PHONY: all re fclean clean libs
 NAME=libftprintf.a
 CC=gcc
 CFLAG=
@@ -25,12 +25,17 @@ OBJ= $(addprefix $(OBJDIR), $(addsuffix .o, $(SRCNAME)))
 
 all: $(NAME)
 
-$(NAME): $(OBJDIR) $(OBJ)
-	@$(CC_LIBS)
+$(NAME): $(OBJDIR) $(OBJ) $(LIBS)
 	ar -rc tmp.a $(OBJ) $(INCDIR)
 	libtool -static -o $(NAME) tmp.a $(LIBS)
 	rm -rf tmp.a
 	@(echo "[ \033[35m$(NAME)\033[00m ]")
+
+$(LIBS): libs ;
+
+libs:
+	@$(CC_LIBS)
+
 
 $(OBJDIR)%.o: $(SRCDIR)%.c
 	@$(CC) $(CFLAG) -c $< -o $@ -I $(INC_DIR) $(INC_DIR_LIBS)

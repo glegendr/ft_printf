@@ -110,12 +110,17 @@ char		*ft_print_hex(t_st *t)
 		ft_flag_is_null(t, ft_strlen(t->data), &vec);
 	if (t->size >= 0)
 		v_append_raw(&vec, t->data, ft_strlen(t->data));
+	v_push_int(&vec, '\0');
 //	v_print(&vec);
 //	*cmpt += v_size(&vec);
 //	free(t->data);
 //	v_del(&vec);
-	char *tmp = NULL;
+/*	char *tmp = NULL;
 	ft_strcpy(tmp, (char *)v_raw(&vec));
+	v_del(&vec);
+	return (tmp);*/
+	char *tmp;
+	tmp = ft_strdup((char *)v_raw(&vec));
 	v_del(&vec);
 	return (tmp);
 	return ((char *)v_raw(&vec));

@@ -80,7 +80,7 @@ char		*ft_print_dec(t_st *t)
 {
 	char	*s;
 	t_vec	vec;
-	int		r;
+	int	r;
 
 	vec = v_new(sizeof(char));
 	s = ft_ini_int(t);
@@ -94,11 +94,19 @@ char		*ft_print_dec(t_st *t)
 	ft_flag_is_size(t, ft_strlen(s) + r, &vec);
 	if (t->size >= 0)
 		v_append_raw(&vec, t->data, ft_strlen(s) + r);
+	v_push_int(&vec, '\0');
 //	v_print(&vec);
 //	*cmpt += v_size(&vec);
 //	free(s);
-	char *tmp = NULL;
-	ft_strcpy(tmp, (char *)v_raw(&vec));
+//	printf("HELL1\n");
+//	char *tmp = NULL;
+//	ft_strcpy(tmp, (char *)v_raw(&vec));
+//	v_del(&vec);
+//	printf("HELL2\n");
+//	return (tmp);
+	char *tmp;
+	tmp = ft_strdup((char *)v_raw(&vec));
 	v_del(&vec);
 	return (tmp);
+	return ((char *)v_raw(&vec));
 }

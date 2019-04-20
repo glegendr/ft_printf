@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-static char		*ft_print(t_vec *vec, char *str)
+static char		*ft_print(t_vec *vec, char *str, int *cmpt)
 {
 	int		i;
 	int		y;
@@ -33,11 +33,15 @@ static char		*ft_print(t_vec *vec, char *str)
 		{
 			t = *(t_st *)v_get(vec, y);
 			s = match_flags(&t);
-			v_append_raw(&v, s, ft_strlen(s));
+			v_append_raw(&v, ft_strdup(s), ft_strlen(s));
+			if (ft_strlen(s) == 0 && (t.prin == 'c' || t.prin == 'C'))
+				v_push_int(&v, '\0');
+			free(s);
 			++y;
 		}
 		++i;
 	}
+	*cmpt = v_size(&v);
 	return ((char *)v_raw(&v));
 }
 
@@ -47,13 +51,14 @@ char			*ft_fprintf(char const *restrict format, ...)
 	va_list		v;
 	char		*str;
 	char		*ret;
+	int		cmpt;
 
 	str = NULL;
 	if (format[0] == 0)
 		return (0);
 	va_start(v, format);
 	vec = ft_pars(format, &v, &str);
-	ret = ft_print(&vec, str);
+	ret = ft_print(&vec, str, &cmpt);
 	free(str);
 	v_del(&vec);
 	return (ret);
@@ -72,16 +77,10 @@ int			ft_printf(char const *restrict format, ...)
 		return (0);
 	va_start(v, format);
 	vec = ft_pars(format, &v, &str);
-	ret = ft_print(&vec, str);
-	cmpt = ft_strlen(ret);
+	ret = ft_print(&vec, str, &cmpt);
 	write(1, ret, cmpt);
 	free(ret);
 	free(str);
 	v_del(&vec);
 	return (cmpt);
-}
-
-void		wchar_t_is_null(int *cmpt)
-{
-	*cmpt -= 1;
 }

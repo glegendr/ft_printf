@@ -25,6 +25,11 @@ char	*ft_print_pc(t_st *t)
 	v_push_int(&vec, '%');
 	while (++t->size < -1)
 		v_push_int(&vec, ' ');
+	v_push_int(&vec, '\0');
+	char *tmp;
+	tmp = ft_strdup((char *)v_raw(&vec));
+	v_del(&vec);
+	return (tmp);
 	return ((char *)v_raw(&vec));
 }
 
