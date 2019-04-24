@@ -12,6 +12,19 @@
 
 #include "ft_printf.h"
 
+static void		use_string(char **s, t_vec *v, t_st *t)
+{
+			if (t->string_size == -1)
+			{
+			}
+			else if (ft_strlen(*s) == 0
+				 && (t->prin == 'c' || t->prin == 'C'))
+				v_push_int(v, '\0');
+			else 
+				v_append_raw(v, ft_strdup(*s), ft_strlen(*s));
+			free(*s);
+}
+
 static char		*ft_print(t_vec *vec, char *str, int *cmpt)
 {
 	int		i;
@@ -31,13 +44,9 @@ static char		*ft_print(t_vec *vec, char *str, int *cmpt)
 			v_push_int(&v, (char)str[i]);
 		else
 		{
-			t = *(t_st *)v_get(vec, y);
+			t = *(t_st *)v_get(vec, y++);
 			s = match_flags(&t);
-			v_append_raw(&v, ft_strdup(s), ft_strlen(s));
-			if (ft_strlen(s) == 0 && (t.prin == 'c' || t.prin == 'C'))
-				v_push_int(&v, '\0');
-			free(s);
-			++y;
+			use_string(&s, &v, &t);
 		}
 		++i;
 	}

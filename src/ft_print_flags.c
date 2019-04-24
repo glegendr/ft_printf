@@ -51,7 +51,7 @@ static char		*ft_print_ls(wchar_t *s, int precision, t_st *t)
 	i = 0;
 	while (s[i] && precision != 0)
 	{
-		if ((s1 = wchar_t_to_str(s[i++], 0)) == NULL)
+		if ((s1 = wchar_t_to_str(s[i++], 0, &t->string_size)) == NULL)
 			continue ;
 		if (precision > 0 && (int)(v_size(&vec) + ft_strlen(s1)) > precision)
 			break ;
@@ -80,8 +80,8 @@ static char		*ft_putwchar(wchar_t c, t_st *t, int i)
 	t_vec	vec;
 	char	*s;
 
-	if ((s = wchar_t_to_str(c, i)) == NULL)
-		return("\0");
+	if ((s = wchar_t_to_str(c, i, &t->string_size)) == NULL)
+		return(NULL);
 	vec = v_new(sizeof(char));
 	if (s[0] == 0)
 	{

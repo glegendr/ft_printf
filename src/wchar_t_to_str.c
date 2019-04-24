@@ -54,7 +54,7 @@ static char		*wchar8_to_str(wchar_t c)
 	return (s);
 }
 
-char			*wchar_t_to_str(wchar_t c, int i)
+char			*wchar_t_to_str(wchar_t c, int i, int *err)
 {
 	char *s;
 
@@ -65,8 +65,11 @@ char			*wchar_t_to_str(wchar_t c, int i)
 		return (s);
 	}
 	if (c < 0 || (c >= 0xD800 && c <= 0xDFFF))
+	{
+		*err = -1;
 		return (NULL);
-	else if (c <= 0x007f)
+	}
+	if (c <= 0x007f)
 		return (wchar8_to_str(c));
 	else if (c <= 0x07ff)
 		return (wchar16_to_str(c));

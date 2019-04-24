@@ -44,7 +44,7 @@ void			ft_flag_is_sharp(t_st *t, int string_s, t_vec *v);
 void			ft_flag_is_null(t_st *t, int string_s, t_vec *v);
 int			ft_flag_is_space(t_st *t, t_vec *vec, void *data);
 
-char			*wchar_t_to_str(wchar_t c, int i);
+char			*wchar_t_to_str(wchar_t c, int i, int *err);
 char			*bin_to_dec(char *s);
 int			ft_rawtoi(char const *restrict s, int *i, t_st *t, int *cmpt);
 
